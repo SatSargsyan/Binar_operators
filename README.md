@@ -90,4 +90,25 @@ Example
     // False
     // True
     // 0x38
-    ```
+  ```
+  ### Binary [| operators](https://msdn.microsoft.com/en-us/library/kxszd0kx.aspx) are predefined for the integral types and bool. For integral types, | computes the bitwise OR of its operands. For bool operands, | computes the logical OR of its operands; that is, the result is false if and only if both its operands are false.
+
+User-defined types can overload the | operator (see operator).
+Example
+```C#
+    class OR
+    {
+        static void Main()
+        {
+            Console.WriteLine(true | false);  // logical or
+            Console.WriteLine(false | false); // logical or
+            Console.WriteLine("0x{0:x}", 0xf8 | 0x3f);   // bitwise or
+        }
+    }
+    /*
+    Output:
+    True
+    False
+    0xff
+    */
+ ``` 
