@@ -112,7 +112,7 @@ Example
     0xff
     */
  ``` 
- ### Binary ^ operators are predefined for the integral types and bool. For integral types, ^ computes the bitwise exclusive-OR of its operands. For bool operands, ^ computes the logical exclusive-or of its operands; that is, the result is true if and only if exactly one of its operands is true.
+ ### Binary [^ operators](https://msdn.microsoft.com/en-us/library/zkacc7k1.aspx) are predefined for the integral types and bool. For integral types, ^ computes the bitwise exclusive-OR of its operands. For bool operands, ^ computes the logical exclusive-or of its operands; that is, the result is true if and only if exactly one of its operands is true.
 
 User-defined types can overload the ^ operator (see operator). Operations on integral types are generally allowed on enumeration.
 Example
