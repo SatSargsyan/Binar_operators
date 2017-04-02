@@ -183,3 +183,32 @@ The computation of 0xf8 ^ 0x3f in the previous example performs a bitwise exclus
 ```
 The result of the exclusive-OR is 1100 0111, which is C7 in hexadecimal.
 
+
+### The [left-shift assignment operator](https://msdn.microsoft.com/en-us/library/ayt2kcfb.aspx).
+
+An expression of the form
+```C#
+x <<= y  
+```
+is evaluated as
+```C#
+x = x << y  
+```
+except that x is only evaluated once. The << operator shifts x left by the number of bits specified by y.
+The <<= operator cannot be overloaded directly, but user-defined types can overload the << operator.
+Example
+```C#
+    class MainClass9
+    {
+        static void Main()
+        {
+            int a = 1000;
+            a <<= 4;
+            Console.WriteLine(a);
+        }
+    }
+    /*
+    Output:
+    16000
+    */
+```
