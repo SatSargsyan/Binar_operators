@@ -212,3 +212,165 @@ Example
     16000
     */
 ```
+### The [right-shift assignment operator](https://msdn.microsoft.com/en-us/library/23as4533.aspx).
+
+An expression of the form
+```C#
+x >>= y  
+```
+is evaluated as
+```C#
+x = x >> y  
+```
+except that x is only evaluated once. The >> operator shifts x right by an amount specified by y.
+The >>= operator cannot be overloaded directly, but user-defined types can overload the >> operator (see operator).
+Example
+```C#
+    class MainClass8
+    {
+        static void Main()
+        {
+            int a = 1000;
+            a >>= 4;
+            Console.WriteLine(a);
+        }
+    }
+    /*
+    Output:
+    62
+    */
+```
+### The [-> operator](https://msdn.microsoft.com/en-us/library/s8bz4d5h.aspx) combines pointer dereferencing and member access.
+
+An expression of the form,
+```C#
+x->y  
+```
+(where x is a pointer of type T* and y is a member of T) is equivalent to,
+```C#
+(*x).y  
+```
+The -> operator can be used only in code that is marked as unsafe.
+The -> operator cannot be overloaded.
+Example
+```C#
+    // compile with: /unsafe
+
+    struct Point
+    {
+        public int x, y;
+    }
+
+    class MainClass12
+    {
+        unsafe static void Main()
+        {
+            Point pt = new Point();
+            Point* pp = &pt;
+            pp->x = 123;
+            pp->y = 456;
+            Console.WriteLine("{0} {1}", pt.x, pt.y);
+        }
+    }
+    /*
+    Output:
+    123 456
+    */
+ ```
+ 
+ ### The [=> token is called the lambda operator](https://msdn.microsoft.com/en-us/library/bb311046.aspx). It is used in lambda expressions to separate the input variables on the left side from the lambda body on the right side. Lambda expressions are inline expressions similar to anonymous methods but more flexible; they are used extensively in LINQ queries that are expressed in method syntax. For more information, see Lambda Expressions.
+ 
+The following example shows two ways to find and display the length of the shortest string in an array of strings. The first part of the example applies a lambda expression (w => w.Length) to each element of the words array and then uses the Min`<TSource>` method to find the smallest length. For comparison, the second part of the example shows a longer solution that uses query syntax to do the same thing.
+
+```C#
+string[] words = { "cherry", "apple", "blueberry" };  
+  
+// Use method syntax to apply a lambda expression to each element  
+// of the words array.   
+int shortestWordLength = words.Min(w => w.Length);  
+Console.WriteLine(shortestWordLength);  
+  
+// Compare the following code that uses query syntax.  
+// Get the lengths of each word in the words array.  
+var query = from w in words  
+            select w.Length;  
+// Apply the Min method to execute the query and get the shortest length.  
+int shortestWordLength2 = query.Min();  
+Console.WriteLine(shortestWordLength2);  
+  
+// Output:   
+// 5  
+// 5  
+```
+
+The => operator has the same precedence as the assignment operator (=) and is right-associative.
+You can specify the type of the input variable explicitly or let the compiler infer it; in either case, the variable is strongly typed at compile time. When you specify a type, you must enclose the type name and the variable name in parentheses, as the following example shows.
+```C#
+int shortestWordLength = words.Min((string w) => w.Length);  
+```
+Example
+The following example shows how to write a lambda expression for the overload of the standard query operator Enumerable.Where`<TSource>` that takes two arguments. Because the lambda expression has more than one parameter, the parameters must be enclosed in parentheses. The second parameter, index, represents the index of the current element in the collection. The Where expression returns all the strings whose lengths are less than their index positions in the array.
+```C#
+static void Main(string[] args)  
+{  
+    string[] digits = { "zero", "one", "two", "three", "four", "five",   
+            "six", "seven", "eight", "nine" };  
+  
+    Console.WriteLine("Example that uses a lambda expression:");  
+    var shortDigits = digits.Where((digit, index) => digit.Length < index);  
+    foreach (var sD in shortDigits)  
+    {  
+        Console.WriteLine(sD);  
+    }  
+  
+    // Output:  
+    // Example that uses a lambda expression:  
+    // five  
+    // six  
+    // seven  
+    // eight  
+    // nine  
+}  
+```
+
+### The [?? operator](https://msdn.microsoft.com/en-us/library/ms173224.aspx) is called the null-coalescing operator. It returns the left-hand operand if the operand is not null; otherwise it returns the right hand operand.
+
+A nullable type can represent a value from the type’s domain, or the value can be undefined (in which case the value is null). You can use the ?? operator’s syntactic expressiveness to return an appropriate value (the right hand operand) when the left operand has a nullible type whose value is null. If you try to assign a nullable value type to a non-nullable value type without using the ?? operator, you will generate a compile-time error. If you use a cast, and the nullable value type is currently undefined, an InvalidOperationException exception will be thrown.
+For more information, see Nullable Types.
+The result of a ?? operator is not considered to be a constant even if both its arguments are constants.
+Example
+```C#
+    class NullCoalesce
+    {
+        static int? GetNullableInt()
+        {
+            return null;
+        }
+
+        static string GetStringValue()
+        {
+            return null;
+        }
+
+        static void Main()
+        {
+            int? x = null;
+
+            // Set y to the value of x if x is NOT null; otherwise,
+            // if x = null, set y to -1.
+            int y = x ?? -1;
+
+            // Assign i to return value of the method if the method's result
+            // is NOT null; otherwise, if the result is null, set i to the
+            // default value of int.
+            int i = GetNullableInt() ?? default(int);
+
+            string s = GetStringValue();
+            // Display the value of s if s is NOT null; otherwise, 
+            // display the string "Unspecified".
+            Console.WriteLine(s ?? "Unspecified");
+        }
+    }
+```
+
+### 
